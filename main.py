@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 import soundcloud
@@ -16,8 +17,12 @@ class bcolors:
 
 isPlaying = False
 
-cid = "1118184d5e041ecc64565a674981f85d"
-cs = "92368b7a0ee608438a7788ebcc63778e"
+__location__ = os.path.realpath(
+    os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
+with open(os.path.join(__location__, '.secret')) as f:
+    cid = f.readline()
+    cs = f.readline()
 
 un = "==="
 pw = "==="
@@ -69,7 +74,7 @@ while not isPlaying:
                 track_title = track.title
                 cmd = which('mpv')
                 cmd += ' ' + track_url
-                p = subprocess.Popen(['mpv', track_url], shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                p = subprocess.Popen([cmd, track_url], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 print bcolors.BOLD + '"' + track_title + '"' + bcolors.ENDC + ' playing...'
                 stdout, stderr = p.communicate()
 
