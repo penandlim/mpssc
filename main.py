@@ -2,6 +2,18 @@ import subprocess
 
 import soundcloud
 
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 isPlaying = False
 
 cid = "1118184d5e041ecc64565a674981f85d"
@@ -47,7 +59,7 @@ def represents_int(s):
 
 
 while not isPlaying:
-    command = raw_input("> ")
+    command = raw_input(bcolors.BOLD + "\n> " + bcolors.ENDC)
     if command:
         if tracks and represents_int(command):
             try:
@@ -58,8 +70,8 @@ while not isPlaying:
                 cmd = which('mpv')
                 cmd += ' ' + track_url
                 p = subprocess.Popen(['mpv', track_url], shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                print bcolors.BOLD + '"' + track_title + '"' + bcolors.ENDC + ' playing...'
                 stdout, stderr = p.communicate()
-                print '"' + track_title + '" playing...'
 
             except IndexError:
                 print 'Please enter a valid number'
@@ -70,7 +82,7 @@ while not isPlaying:
                 formattedOrderNum = str(i + 1)
                 if len(formattedOrderNum) == 1:
                     formattedOrderNum = '0' + formattedOrderNum
-                print formattedOrderNum + ' ' + tracks[i].title
+                print bcolors.OKBLUE + formattedOrderNum + bcolors.ENDC + bcolors.OKGREEN + ' ' + tracks[i].title + bcolors.ENDC
 
         elif command == 'quit' or command == 'exit':
             break
