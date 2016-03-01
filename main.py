@@ -37,6 +37,7 @@ def which(program):
 
     return None
 
+
 def represents_int(s):
     try:
         int(s)
@@ -69,7 +70,7 @@ while not isPlaying:
                 formattedOrderNum = str(i + 1)
                 if len(formattedOrderNum) == 1:
                     formattedOrderNum = '0' + formattedOrderNum
-                print formattedOrderNum + ' ' + tracks[i].title + ' ' + tracks[i].permalink_url
+                print formattedOrderNum + ' ' + tracks[i].title
 
         elif command == 'quit' or command == 'exit':
             break
