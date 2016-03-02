@@ -1,10 +1,12 @@
 import os
 import subprocess
-
 import soundcloud
 
 
-class bcolors:
+class TerminalColors:
+    def __init__(self):
+        pass
+
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -21,11 +23,12 @@ __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 with open(os.path.join(__location__, '.secret')) as f:
-    cid = f.readline()
-    cs = f.readline()
+    cid = f.readline().strip()
+    cs = f.readline().strip()
+    f.close()
 
-un = "==="
-pw = "==="
+un = "username"
+pw = "password"
 
 client = soundcloud.Client(
     client_id=cid,
@@ -64,7 +67,7 @@ def represents_int(s):
 
 
 while not isPlaying:
-    command = raw_input(bcolors.BOLD + "\n> " + bcolors.ENDC)
+    command = raw_input(TerminalColors.BOLD + "\n> " + TerminalColors.ENDC)
     if command:
         if tracks and represents_int(command):
             try:
@@ -75,7 +78,7 @@ while not isPlaying:
                 cmd = which('mpv')
                 cmd += ' ' + track_url
                 p = subprocess.Popen([cmd, track_url], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                print bcolors.BOLD + '"' + track_title + '"' + bcolors.ENDC + ' playing...'
+                print TerminalColors.BOLD + '"' + track_title + '"' + TerminalColors.ENDC + ' playing...'
                 stdout, stderr = p.communicate()
 
             except IndexError:
@@ -87,7 +90,8 @@ while not isPlaying:
                 formattedOrderNum = str(i + 1)
                 if len(formattedOrderNum) == 1:
                     formattedOrderNum = '0' + formattedOrderNum
-                print bcolors.OKBLUE + formattedOrderNum + bcolors.ENDC + bcolors.OKGREEN + ' ' + tracks[i].title + bcolors.ENDC
+                print TerminalColors.OKBLUE + formattedOrderNum + TerminalColors.ENDC + TerminalColors.OKGREEN + ' ' + tracks[
+                    i].title + TerminalColors.ENDC
 
         elif command == 'quit' or command == 'exit':
             break
