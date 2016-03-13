@@ -142,5 +142,6 @@ while True:
                 sys.stdout.flush()
                 time.sleep(1)
             else:
+                g.elapsed_time = None
                 g.isPlaying = False
 
